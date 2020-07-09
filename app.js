@@ -11,4 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.style.display = none;
   });
 
+// PHRASES
+  let phrases = [
+    "for the birds",
+    "a different kettle of fish",
+    "a drop in the ocean",
+    "bet your bottom dollar",
+    "for all intents and purposes"
+  ]
+
 });
