@@ -21,11 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
     "for all intents and purposes"
   ]
 
-// GET RANDOM PHRASE FUNCTION
+// GET & RETURN RANDOM PHRASE FUNCTION
   function getRandomPhraseAsArray(arr) {
     let randomPhrase = arr[Math.floor(Math.random() * arr.length)];
     let words = randomPhrase.split("");
     return words;
+  }
+
+// ADD PHRASE TO DISPLAY - LOOP & CREATE ELEMENTS
+  function addPhraseToDisplay(arr) {
+    for (let i = 0; i < phrases.length; i++) {
+      const li = document.createElement('li');
+    }
   }
 
 });
