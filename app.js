@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const qwerty = document.getElementById('qwerty');
-  const phrase = document.querySelector('#phrase ul');
+  const phraseUL = document.querySelector('#phrase ul');
   const startButton = document.querySelector('.btn__reset');
   const overlay = document.getElementById('overlay');
 
@@ -32,6 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
   function addPhraseToDisplay(arr) {
     for (let i = 0; i < phrases.length; i++) {
       const li = document.createElement('li');
+      li.textContent = arr[i];
+      if (arr[i] === "") {
+        li.className = 'space';
+      } else {
+        li.className = 'letter';
+      }
+    }
+    phraseUL.appendChild(li);
+  }
+
+// CHECK LETTER FUNCTION
+  function checkLetter(button) {
+    const list = document.querySelector('.letter');
+    let correct = null;
+    for (let i = 0; i < list.length; i++) {
+      if (button.textContent.toUpperCase() == list[i].textContent.toUpperCase()){
+        list[i].classList.add('show')
+        correct = button.textContent;
+      }
     }
   }
 
