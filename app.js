@@ -9,12 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let missed = 0;
 
-// START BUTTON
-  startButton.addEventListener('click', () => {
-    overlay.style.display = 'none';
-    addPhraseToDisplay(getRandomPhraseAsArray);
-  });
-
 // PHRASES
   let phrases = [
     "for the birds",
@@ -24,16 +18,22 @@ document.addEventListener('DOMContentLoaded', () => {
     "for all intents and purposes"
   ]
 
+// START BUTTON
+  startButton.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    resetGame();
+  });
+
 // GET & RETURN RANDOM PHRASE FUNCTION
   function getRandomPhraseAsArray(arr) {
     let randomPhrase = arr[Math.floor(Math.random() * arr.length)];
-    let words = randomPhrase.split("");
-    return words;
+    let word = randomPhrase.split("");
+    return word;
   }
 
 // ADD PHRASE TO DISPLAY - LOOP & CREATE ELEMENTS
   function addPhraseToDisplay(arr) {
-    for (let i = 0; i < phrases.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       const li = document.createElement('li');
       li.textContent = arr[i];
       if (arr[i] === "") {
@@ -45,30 +45,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-
-
 // CHECK LETTER FUNCTION
   function checkLetter(button) {
-    const letter = document.querySelector('.letter');
-    let correct = null;
-    for (let i = 0; i < letter.length; i++) {
-      if (button.textContent.toUpperCase() == letter[i].textContent.toUpperCase()){
-        letter[i].classList.add('show')
-        correct = button.textContent;
+    const lis = document.querySelector('.letter');
+    let match = null;
+    for (let i = 0; i < lis.length; i++) {
+      if (button.textContent.toUpperCase() == lis[i].textContent.toUpperCase()){
+        lis[i].classList.add('show')
+        match = button.textContent;
       }
     }
-    return correct;
+    return match;
   }
 
 // KEYBOARD EVENT LISTENER
-  qwerty.addEventListener('click', (e) => {
-    if (e.target.tagName == 'BUTTON') {
-      const button = e.target;
+  qwerty.addEventListener('click', (event) => {
+    if (event.target.tagName == 'BUTTON') {
+      const button = event.target;
       const letterFound = checkLetter(button);
       let heart = tries.firstElementChild;
 
       if (letterFound == null) {
-        button.classList.add('wrongGuess');
+        button.classList.add('wrongletter');
         tries.removeChild(heart);
         missed += 1;
       } else {
@@ -79,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkWin();
   });
 
-  // WIN OR LOSS FUNCTION & GAME RESET
+  // WIN OR LOSS FUNCTION
     function checkWin() {
       let letters = document.getElementsByClassName('letter');
       let shown = document.getElementsByClassName('show');
@@ -101,8 +99,31 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+// GAME RESET
     function resetGame() {
+      phraseUL.innerHTML = '';
+      const phraseArray = getRandomPhraseAsArray(phrases);
+      addPhraseToDisplay(phraseArray);
 
+      removeButton = document.querySelectorAll('button');
+      for (let i = 0; i <removeButton.length; i++) {
+        removeButton[i].disabled = false;
+        removeButton[i].className = '';
+      }
+
+      const heartsRow = document.querySelectorAll('#scoreboard ol li');
+      const missingHearts = 5 - heartsRow.length;
+      if (missingHearts > 0) {
+        for (let i = 0; i < missingHearts.length; i++) {
+          let heartLI = document.createElement('li');
+          let heartIMG = document.createElement('img');
+          heartIMG.src = "images/liveHeart.png";
+          heartLI.classList.add('tries');
+          heartLI.appendChild(heartIMG);
+          tries.appendChild(heartLI);
+        }
+      }
+      missed = 0;
     }
 
 });
