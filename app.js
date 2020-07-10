@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // CHECK LETTER FUNCTION
   function checkLetter(button) {
-    const lis = document.querySelector('.letter');
+    const letter = document.querySelector('.letter');
     let correct = null;
-    for (let i = 0; i < lis.length; i++) {
-      if (button.textContent.toUpperCase() == lis[i].textContent.toUpperCase()){
-        lis[i].classList.add('show')
+    for (let i = 0; i < letter.length; i++) {
+      if (button.textContent.toUpperCase() == letter[i].textContent.toUpperCase()){
+        letter[i].classList.add('show')
         correct = button.textContent;
       }
     }
