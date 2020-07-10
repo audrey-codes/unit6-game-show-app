@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // START BUTTON
   startButton.addEventListener('click', () => {
     overlay.style.display = 'none';
+    addPhraseToDisplay(getRandomPhraseAsArray);
   });
 
 // PHRASES
@@ -40,9 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         li.className = 'letter';
       }
+      phraseUL.appendChild(li);
     }
-    phraseUL.appendChild(li);
   }
+
+
 
 // CHECK LETTER FUNCTION
   function checkLetter(button) {
@@ -75,5 +78,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     checkWin();
   });
+
+  // WIN OR LOSS FUNCTION & GAME RESET
+    function checkWin() {
+      let letters = document.getElementsByClassName('letter');
+      let shown = document.getElementsByClassName('show');
+
+      if (letters.length == shown.length) {
+        overlay.className = 'win';
+        const win = document.querySelector('.win');
+        win.style.display = 'flex';
+        title.textContent = "Congratulations: You Won!"
+        startButton.textContent = "Play Again";
+      } else {
+        if (missed > 4) {
+          overlay.className = 'lose';
+          const win = document.querySelector('.lose');
+          lose.style.display = 'flex';
+          title.textContent = "You Lost: Better Luck Next Time!"
+          startButton.textContent = "Try Again";
+        }
+      }
+    }
+
+    function resetGame() {
+
+    }
 
 });
