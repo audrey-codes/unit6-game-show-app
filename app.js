@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const phraseUL = document.querySelector('#phrase ul');
   const startButton = document.querySelector('.btn__reset');
   const overlay = document.getElementById('overlay');
+  const tries = document.querySelector('#scoreboard ol');
+  const title = document.querySelector('.title');
 
   let missed = 0;
 
@@ -44,14 +46,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // CHECK LETTER FUNCTION
   function checkLetter(button) {
-    const list = document.querySelector('.letter');
+    const lis = document.querySelector('.letter');
     let correct = null;
-    for (let i = 0; i < list.length; i++) {
-      if (button.textContent.toUpperCase() == list[i].textContent.toUpperCase()){
-        list[i].classList.add('show')
+    for (let i = 0; i < lis.length; i++) {
+      if (button.textContent.toUpperCase() == lis[i].textContent.toUpperCase()){
+        lis[i].classList.add('show')
         correct = button.textContent;
       }
     }
+    return correct;
   }
+
+// KEYBOARD EVENT LISTENER
+  qwerty.addEventListener('click', (e) => {
+    if (e.target.tagName == 'BUTTON') {
+      const button = e.target;
+      const letterFound = checkLetter(button);
+      let heart = tries.firstElementChild;
+
+      if (letterFound == null) {
+        button.classList.add('wrongGuess');
+        tries.removeChild(heart);
+        missed += 1;
+      } else {
+        button.classList.add('chosen')
+      }
+      button.disabled = true;
+    }
+    checkWin();
+  });
 
 });
